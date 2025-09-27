@@ -154,6 +154,42 @@ void PrintList(DLinkNode *L)
 	cout << endl;
 }
 
+void Reverse(DLinkNode *&L)
+{
+	DLinkNode *p = L->next,*q;
+	L->next = NULL;
+	while(p != NULL)
+	{
+		q = p->next;
+		p->next = L->next;
+		if(L->next != NULL)
+			L->next->prior = p;
+		L->next = p;
+		p->prior = L;
+		p = q;
+	}
+}
+
+void Sort(DLinkNode *&L)
+{
+	DLinkNode *pre,*p,*q;
+	p = L->next->next;
+	L->next->next = NULL;
+	while(p != NULL)
+	{
+		q = p->next;
+		pre = L;
+		while(pre->next != NULL && pre->next->data < p->data)     //当pre移动到已排序部分的最后一个节点时，pre->next会指向NULL,此时继续判断pre->next->data < p->data就会访问空指针，导致程序崩溃
+			pre = pre->next;
+		p->next = pre->next;
+		if(pre->next != NULL)
+			pre->next->prior = p;
+		pre->next = p;
+		p->prior = pre;
+		p = q;
+	}
+}
+
 int main()
 {
 	DLinkNode *M;
@@ -175,6 +211,8 @@ int main()
 		cout << "4.按元素值查找" << endl;
 		cout << "5.插入数据元素" << endl;
 		cout << "6.删除数据元素" << endl;
+		cout << "7.实现双链表逆序" << endl;
+		cout << "8.实现双链表递增排序" << endl;
 		cout << "0.退出" << endl;
 		cout << "请选择对应功能：";
 		cin >> choice;
@@ -211,6 +249,14 @@ int main()
 			cin >> n;
 			if(!Listdelete(M,n,e)) cout << "删除失败" << endl;
 			else cout << "删除成功,你删除元素的值为：" << e << endl;
+			break;
+		case 7:
+			Reverse(M);
+			PrintList(M);
+			break;
+		case 8:
+			Sort(M);
+			PrintList(M);
 			break;
 		case 0:
 			DestroyList(M);
