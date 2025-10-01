@@ -105,11 +105,11 @@ int main()
 			cout << "请输入进栈元素：";
 			cin >> e;
 			if(Push(s,e)) cout << "进栈成功！" << endl;
-			else cout << "进栈失败！" << endl;
+			else cout << "进栈失败!栈已满" << endl;
 			break;
 		case 3:
 			if(Pop(s,e)) cout << "出栈成功！栈顶元素为："  << e << endl;
-			else cout << "出栈失败！" << endl;
+			else cout << "出栈失败！栈为空" << endl;
 			break;
 		case 4:
 			if(GetTop(s,e)) cout << "栈顶元素为：" << e << endl;
